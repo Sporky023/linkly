@@ -1,15 +1,17 @@
 describe 'Create shortening,', type: :request do
   describe 'when provided a valid long url,' do
-    describe 'when the url has not been submitted before,' do
-      before(:example) do
-        post(
-          '/short_link',
-          params: { long_url: 'https://google.com' }.to_json,
-          headers: { 'CONTENT_TYPE': 'application/json' }
-        )
+    def do_request(url = nil)
+      post(
+        '/short_link',
+        params: { long_url: url || 'https://google.com' }.to_json,
+        headers: { 'CONTENT_TYPE': 'application/json' }
+      )
 
-        @parsed = JSON.parse(@response.body).with_indifferent_access
-      end
+      @parsed = JSON.parse(@response.body).with_indifferent_access
+    end
+
+    describe 'when the url has not been submitted before,' do
+      before(:example) { do_request }
 
       it 'returns the long url' do
         expect(@parsed).to have_key(:long_url)
@@ -22,10 +24,14 @@ describe 'Create shortening,', type: :request do
 
     describe 'when the url has been submitted before,' do
       before(:example) do
-
+        url = 'https://www.mozilla.org/en-US/firefox/new/'
+        @existing = create(:shortening, long_url: url)
+        do_request(url)
       end
 
-      it 'returns the existing url and short link'
+      it 'returns the existing url and short link' do
+        expect(@parsed[:short_link]).to match(@existing.short_link_code)
+      end
     end
   end
 
