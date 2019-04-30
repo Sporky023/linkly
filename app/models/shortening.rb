@@ -1,7 +1,11 @@
 class Shortening < ApplicationRecord
   CODE_LENGTH_IN_CHARS = 8
 
-  validates :long_url, presence: true, uniqueness: true
+  validates :long_url,
+    presence: true,
+    uniqueness: true,
+    format: { with: URI.regexp, message: 'must be a valid url' }
+
   validates :short_link_code, presence: true, uniqueness: true
 
   validates_presence_of :long_url, :short_link_code
