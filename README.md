@@ -1,24 +1,20 @@
-# README
+# Linkly
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Linkly is a url-shortening example app, built in <3 hours
 
-Things you may want to cover:
+### Install
 
-* Ruby version
+1. Clone this repo and navigate to the project root
+2. Ensure Ruby version 2.6.2 is installed and active in your terminal (rbenv is good for this)
+3. Run command `bundle install`
+4. Run command `rails db:setup`
 
-* System dependencies
+### How to run the app
 
-* Configuration
+* Follow "Install" steps above.  
+* Run command `rails s` (add an option ` -p 1234` to run on port 1234; default is 3000)
 
-* Database creation
+### How to run the test suite
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Follow "Install" steps above.
+* Run command `rspec`
