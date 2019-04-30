@@ -11,6 +11,14 @@ describe 'Visit short link', type: :request do
   end
 
   describe 'when the requested link does not exist' do
-    it 'renders an error message'
+    before(:example){ get "/#{SecureRandom.hex(4)}" }
+
+    it('returns a 404'){ expect(@response.status).to eq(404) }
+
+    it('includes a message about the missing link') do
+      expect(JSON.parse(@response.body)['errors']).to(
+        include('Could not find that short link')
+      )
+    end
   end
 end

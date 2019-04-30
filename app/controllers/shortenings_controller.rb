@@ -11,6 +11,8 @@ class ShorteningsController < ApplicationController
     )
 
     redirect_to @shortening.long_url
+  rescue ActiveRecord::RecordNotFound => e
+    render status: 404, json: { errors: ["Could not find that short link"] }
   end
 
   private
