@@ -4,7 +4,11 @@ class Shortening < ApplicationRecord
   validates :long_url,
     presence: true,
     uniqueness: true,
-    format: { with: URI.regexp, message: 'must be a valid url' }
+    format: {
+      with: URI.regexp,
+      message: 'must be a valid url',
+      if: -> (record) { record.long_url.present? }
+    }
 
   validates :short_link_code, presence: true, uniqueness: true
 

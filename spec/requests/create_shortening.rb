@@ -9,6 +9,16 @@ describe 'Create shortening,', type: :request do
     @parsed = JSON.parse(@response.body).with_indifferent_access
   end
 
+  def do_request_with_blank_params(url = nil)
+    post(
+      '/short_link',
+      params: {}.to_json,
+      headers: { 'CONTENT_TYPE': 'application/json' }
+    )
+
+    @parsed = JSON.parse(@response.body).with_indifferent_access
+  end
+
   describe 'when provided a valid long url,' do
     describe 'when the url has not been submitted before,' do
       before(:example) { do_request }
@@ -45,7 +55,11 @@ describe 'Create shortening,', type: :request do
   end
 
   describe 'when provided with no long url' do
-    it 'returns 422'
-    it 'includes a message about the missing parameter'
+    before(:example) { do_request_with_blank_params }
+
+    it('returns 422'){ expect(@response.status).to eq(422) }
+    it 'includes a message about the missing parameter' do
+      expect(@parsed[:errors]).to include('Long url can\'t be blank')
+    end
   end
 end
