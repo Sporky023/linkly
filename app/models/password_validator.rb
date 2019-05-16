@@ -7,14 +7,19 @@ class PasswordValidator
     :contains_at_least_min_characters
   ]
 
-  def self.valid?(password)
+  def initialize(auth_service, rules)
+    @auth_service = auth_service || default_auth_service
+    @rules = rules
+  end
+
+  def self.valid?(password, num_rules_required = RULES.size)
+    results = []
+
     RULES.each do |method_name|
-      unless self.send(method_name, password)
-        return false
-      end
+      results.push self.send(method_name, password)
     end
 
-    true
+    results.select(&:present?).count >= num_rules_required
   end
 
   private
