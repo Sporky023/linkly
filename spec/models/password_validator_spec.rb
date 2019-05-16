@@ -11,7 +11,15 @@ describe PasswordValidator do
     it 'requires at least 1 uppdercase character' do
       okay_password = 'Password123'
       nokay_password = 'password123'
-      
+
+      expect( PasswordValidator.valid?(okay_password) ).to be(true)
+      expect( PasswordValidator.valid?(nokay_password) ).to be(false)
+    end
+
+    it "has to be at least 8 characters" do
+      okay_password = 'Password123'
+      nokay_password = 'Pass123'
+
       expect( PasswordValidator.valid?(okay_password) ).to be(true)
       expect( PasswordValidator.valid?(nokay_password) ).to be(false)
     end
