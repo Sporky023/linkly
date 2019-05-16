@@ -11,6 +11,11 @@ Stuff I'd like to do next, given more time, within Part 2 of the exercise:
 * Re-build as a non-api app (initially generated with `rails new` using `--api` flag), so I can render an html page telling them "this short link not found"
   * for now this could be simply plain text, or I could hack html and css into place without having to regenerate app
 
+### Password validation
+
+* Has to be at least 1 digit
+* Has to have at least 1 uppercase character
+
 ### Install
 
 1. Clone this repo and navigate to the project root
